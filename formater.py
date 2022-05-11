@@ -1,12 +1,13 @@
 
-
+# Global variables
+operator = '+-*/='
 # Module for formqting the expression
 
-# --- Formatinf for control ----
+# ---- Formatinf for control ----
 #  
 
 def number_of_operator(exp): # return the number of operators found in a mathematical expression
-    operator = '+-*/='
+    # operator = '+-*/='
     count = 0
     for c in exp:
         if operator.find(c) != -1:
@@ -14,7 +15,7 @@ def number_of_operator(exp): # return the number of operators found in a mathema
     return count
 
 def operator_isolator(exp): # Isolate operator operators with a specific charactor
-    operator = '+-*/='
+    # operator = '+-*/='
     returned_exp = []
     part = ''
     operator_number = number_of_operator(exp)
@@ -32,22 +33,56 @@ def operator_isolator(exp): # Isolate operator operators with a specific charact
         elif i == (len(exp) - 1) and operator_number_count == operator_number:
             returned_exp.append(part)
             continue
-
     return returned_exp
+
+def operator_joiner(exp_splited): # Join operators with numbers
+    # operator = '+-*/='
+    i = 0
+    while i < len(exp_splited):
+        if operator.find(exp_splited[i]) != -1 and len(exp_splited[i]) == 1:
+            exp_next = exp_splited[i + 1] if exp_splited[i]!= '=' else ''
+            exp_previous = exp_splited[i - 1] if i != 0 and exp_splited[i] == '*' or exp_splited[i] == '/' else ''
+    
+            if i + 1 < len(exp_splited):
+                if exp_splited[i] == '+' or exp_splited[i] == '-':
+                    exp_splited[i] = exp_previous + exp_splited[i] + exp_next
+                    del exp_splited[i + 1]
+                    
+                elif exp_splited[i] == '*' or exp_splited[i] == '/':
+                    exp_splited[i] = exp_previous + exp_splited[i] + exp_next
+                    del exp_splited[i + 1]
+                    if i != 0:
+                        del exp_splited[i - 1]
+        i += 1
+    return exp_splited
 
 def space_deleter(term, c = ' '): # Delete space in form an expression
     return term.replace(c, '')
 
-def exp_space_deleter(exp_splited):
+def exp_space_deleter(exp_splited): # Delete space in term in the splited format of exp
     for i in range(len(exp_splited)):
         exp_splited[i] = space_deleter(exp_splited[i])
     return exp_splited
 
-# ----
+def empty_term_deleter(exp_splited):
+    i = 0
+    while i < len(exp_splited):
+        if exp_splited[i] == '':
+            del exp_splited[i]
+        i += 1
+    return exp_splited
 
-def init_formating(exp):
-    return exp_space_deleter(operator_isolator(exp))
+#
+# ------
 
+def init_formating(exp): 
+    # Isolate operators -> 
+    # delete spaces in terms -> 
+    # delete empty terms -> 
+    # join operators with terms except equal operator -> 
+    # return the list in string format using join() function
+    return ' '.join(operator_joiner(empty_term_deleter(exp_space_deleter(operator_isolator(exp)))))
+#
 # ------
 
 exp = input('Your expression please : ')
