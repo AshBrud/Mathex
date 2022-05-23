@@ -7,13 +7,17 @@ from controler import init_control_by_setp
 
 # Long test
 
+# exp_list = [['x=3=0'],
+#             ['2x+3-=0', '2x+3+=0', '2x+3*=0', '2x+3/=0'],
+#             ['2x+3=-0', '2x+3=+0', '2x+3=*0', '2x+3=/0'],
+#             ['2x+-3=0', '2x++3=0', '2x+*3=0', '2x+/3=0'],
+#             ['2x--3=0', '2x-+3=0', '2x-*3=0', '2x-/3=0'],
+#             ['2x*-3=0', '2x*+3=0', '2x**3=0', '2x*/3=0'],
+#             ['2x/-3=0', '2x/+3=0', '2x/*3=0', '2x//3=0']]
+
 exp_list = [['x=3=0'],
-            ['2x+3-=0', '2x+3+=0', '2x+3*=0', '2x+3/=0'],
-            ['2x+3=-0', '2x+3=+0', '2x+3=*0', '2x+3=/0'],
-            ['2x+-3=0', '2x++3=0', '2x+*3=0', '2x+/3=0'],
-            ['2x--3=0', '2x-+3=0', '2x-*3=0', '2x-/3=0'],
-            ['2x*-3=0', '2x*+3=0', '2x**3=0', '2x*/3=0'],
-            ['2x/-3=0', '2x/+3=0', '2x/*3=0', '2x//3=0']]
+            ['2x*-3=0'],
+            ['2x/-3=0']]
 
 # Quick test
 
@@ -27,7 +31,7 @@ for row in exp_list:
             exp_controls = init_control_by_setp(exp)
 
             if exp_controls['result']:
-                print(exp_controls['feedback'])
+                # print(exp_controls['feedback'])
                 print('-> ', init_formating(exp_controls['exp']))
                 break
             else:
